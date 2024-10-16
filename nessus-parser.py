@@ -39,6 +39,9 @@ def parse_nessus_file(nessus_file, port_filter, severity_filter, plugin_filter, 
                     fqdn_text = host_fqdn if host_fqdn else ""
                     result_list.append([host_ip, fqdn_text, port, findings_text])
 
+    # Remove exact duplicate rows
+    result_list = list(map(list, set(map(tuple, result_list))))
+
     # Sort results if sort_by argument is provided
     if sort_by:
         sort_by = sort_by.lower()
